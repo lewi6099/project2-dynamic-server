@@ -55,13 +55,64 @@ app.get('/murder-rate/under10', (req, res) => {
             tableBody += tableRow;
         });
         let style = "<style>" + results[2] + "</style>";
-        let response = results[1].replace('$TITLE$', "Cities with under 10k murders").replace('$TABLEDATA$', tableBody).replace('<style></style>', style);
+        let response = results[1].replace('$TITLE$', "Cities with under 10k murders").replace('$TABLEDATA$', tableBody).replace('<style></style>', style).replace('$NEXT$', 'http://localhost:8000/murder-rate/10-40');
         res.status(200).type('html').send(response);
     }).catch((error) => {
         console.log(error);
         res.status(404).type('txt').send('File not found');
     });
 })
+
+app.get('/murder-rate/10-40', (req, res) => {
+    let p1 = dbSelect("SELECT * FROM murders WHERE murders_2015 > 10 AND murders_2015 < 40");
+    let p2 = fs.promises.readFile(path.join(template, 'template.html'), 'utf-8');
+    let p3 = fs.promises.readFile(path.join(css, 'style.css'), 'utf-8');
+    Promise.all([p1, p2, p3]).then((results) => {
+        let tableBody = '';
+        results[0].forEach((city) => {
+            let tableRow = '<tr>';
+            tableRow += '<td>' + city.city + '</td>';
+            tableRow += '<td>' + city.state + '</td>';
+            tableRow += '<td>' + city.murders_2015 + '</td>';
+            tableRow += '<td>' + city.murders_2016 + '</td>';
+            tableRow += '<td>' + city.change + '</td>';
+            tableRow += '</tr>\n';
+            tableBody += tableRow;
+        });
+        let style = "<style>" + results[2] + "</style>";
+        let response = results[1].replace('$TITLE$', "Cities with between 10 and 40 murders").replace('$TABLEDATA$', tableBody).replace('<style></style>', style).replace('$PREV$', 'http://localhost:8000/murder-rate/under10').replace('$NEXT$', 'http://localhost:8000/murder-rate/40-100');
+        res.status(200).type('html').send(response);
+    }).catch((error) => {
+        console.log(error);
+        res.status(404).type('txt').send('File not found');
+    });
+})
+
+app.get('/murder-rate/40-100', (req, res) => {
+    let p1 = dbSelect("SELECT * FROM murders WHERE murders_2015 > 40 AND murders_2015 < 100");
+    let p2 = fs.promises.readFile(path.join(template, 'template.html'), 'utf-8');
+    let p3 = fs.promises.readFile(path.join(css, 'style.css'), 'utf-8');
+    Promise.all([p1, p2, p3]).then((results) => {
+        let tableBody = '';
+        results[0].forEach((city) => {
+            let tableRow = '<tr>';
+            tableRow += '<td>' + city.city + '</td>';
+            tableRow += '<td>' + city.state + '</td>';
+            tableRow += '<td>' + city.murders_2015 + '</td>';
+            tableRow += '<td>' + city.murders_2016 + '</td>';
+            tableRow += '<td>' + city.change + '</td>';
+            tableRow += '</tr>\n';
+            tableBody += tableRow;
+        });
+        let style = "<style>" + results[2] + "</style>";
+        let response = results[1].replace('$TITLE$', "Cities with between 40 and 100 murders").replace('$TABLEDATA$', tableBody).replace('<style></style>', style).replace('$PREV$', 'http://localhost:8000/murder-rate/10-40').replace('$NEXT$', 'http://localhost:8000/murder-rate/over100');
+        res.status(200).type('html').send(response);
+    }).catch((error) => {
+        console.log(error);
+        res.status(404).type('txt').send('File not found');
+    });
+})
+
 
 app.listen(port, () => {
     console.log('Now listening on port ' + port);
