@@ -7,7 +7,10 @@
         "email": "lewi6099@stthomas.edu"
     },
     "contributors": ["Furaha Aswan, Cesar Gonzalez"],
-    "repository": {"https://github.com/lewi6099/project2-dynamic-server"},
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/lewi6099/project2-dynamic-server"
+    },
     "dependencies": {
         "express": "^4.18.2",
         "sqlite3": "^5.1.6"
