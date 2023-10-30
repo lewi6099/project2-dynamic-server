@@ -5,9 +5,82 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Murders</title>
 	<style></style>
+	<script>
+	window.onload = function () {
+
+		var chart = new CanvasJS.Chart("chartContainer", {
+			animationEnabled: true,
+			title:{
+				text: "$TITLE$"
+			},
+			axisX: {
+				title: "Cities",
+				interval: 1
+			},
+			axisY: {
+				title: "Murders",
+				includeZero: true
+			},
+			legend: {
+				cursor:"pointer",
+				itemclick : toggleDataSeries
+			},
+			toolTip: {
+				shared: true,
+				content: toolTipFormatter
+			},
+			data: [{
+				type: "bar",
+				showInLegend: true,
+				name: "2016",
+				color: "lightgray",
+				dataPoints: $DATAPOINTS_2016$
+			},
+			{
+				type: "bar",
+				showInLegend: true,
+				name: "2015",
+				color: "black",
+				dataPoints: $DATAPOINTS_2015$
+			}]
+		});
+		chart.render();
+		
+		function toolTipFormatter(e) {
+			var str = "";
+			var change = Math.abs(e.entries[1].dataPoint.y - e.entries[0].dataPoint.y);
+			var str3;
+			var str2 ;
+			for (var i = 0; i < e.entries.length; i++){
+				var str1 = "<span style= \"color:"+e.entries[i].dataSeries.color + "\">" + e.entries[i].dataSeries.name + "</span>: <strong>"+  e.entries[i].dataPoint.y + "</strong> <br/>" ;
+				str = str.concat(str1);
+			}
+			str2 = "<strong>" + e.entries[0].dataPoint.label + "</strong> <br/>";
+			str3 = "<span style = \"color:Tomato\">Change: </span><strong>" + change + "</strong><br/>";
+			return (str2.concat(str)).concat(str3);
+		}
+		
+		function toggleDataSeries(e) {
+			if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+				e.dataSeries.visible = false;
+			}
+			else {
+				e.dataSeries.visible = true;
+			}
+			chart.render();
+		}
+		
+		}
+		</script>
 </head>
 <body>
+	<ul>
+		<li><a href="/">Home</a></li>
+		<li><a href="/murder-rate">Murder Data</a></li>
+	</ul>
 	<h1>$TITLE$</h1>
+	<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+	<br>
 	<table>
 		<tr>
 			<th>City</th>
@@ -19,8 +92,9 @@
 		$TABLEDATA$
 	</table>
 	<div>
-		<a href="#" class="previous ">&#8249; Previous</a>
-		<a href="#" class="next ">Next &#8250; </a>
+		<a href=$PREV$ class="previous ">&#8249; Previous</a>
+		<a href=$NEXT$ class="next ">Next &#8250; </a>
 	</div>
+	<script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
 </body>
 </html>
