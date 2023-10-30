@@ -62,7 +62,7 @@ app.get('/murder-rate/under10', (req, res) => {
             datapoints_2016.push(datapoint_2016);
         });
         let style = "<style>" + results[2] + "</style>";
-        let response = results[1].replace("$DATAPOINTS_2016$", JSON.stringify(datapoints_2016)).replace("$DATAPOINTS_2015$", JSON.stringify(datapoints_2015)).replace('$TITLE$', "Cities with under 10 murders").replace('$TABLEDATA$', tableBody).replace('<style></style>', style).replace('$NEXT$', 'http://localhost:8000/murder-rate/10-40');
+        let response = results[1].replace("$DATAPOINTS_2016$", JSON.stringify(datapoints_2016)).replace("$DATAPOINTS_2015$", JSON.stringify(datapoints_2015)).replace('$TITLE$', "Cities with under 10 murders").replace('$TABLEDATA$', tableBody).replace('<style></style>', style).replace('$PREV$', 'http://localhost:8000/murder-rate/over100').replace('$NEXT$', 'http://localhost:8000/murder-rate/10-40');
         res.status(200).type('html').send(response);
     }).catch((error) => {
         console.log(error);
@@ -161,7 +161,7 @@ app.get('/murder-rate/over100', (req, res) => {
 
         });
         let style = "<style>" + results[2] + "</style>";
-        let response = results[1].replace("$DATAPOINTS_2016$", JSON.stringify(datapoints_2016)).replace("$DATAPOINTS_2015$", JSON.stringify(datapoints_2015)).replace('$TITLE$', "Cities with over 100 murders").replace('$TABLEDATA$', tableBody).replace('<style></style>', style).replace('$PREV$', 'http://localhost:8000/murder-rate/10-40').replace('$NEXT$', 'http://localhost:8000/murder-rate/over100');
+        let response = results[1].replace("$DATAPOINTS_2016$", JSON.stringify(datapoints_2016)).replace("$DATAPOINTS_2015$", JSON.stringify(datapoints_2015)).replace('$TITLE$', "Cities with over 100 murders").replace('$TABLEDATA$', tableBody).replace('<style></style>', style).replace('$PREV$', 'http://localhost:8000/murder-rate/40-100').replace('$NEXT$', 'http://localhost:8000/murder-rate/under10');
         res.status(200).type('html').send(response);
     }).catch((error) => {
         console.log(error);
