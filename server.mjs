@@ -38,12 +38,6 @@ function dbSelect(query, params) {
     return p;
 }
 
-app.get('*', (req, res) => {
-    console.log('Invalid request for: ' + req.url);
-    res.status(404).type('txt').send('No data for request: ' + req.url);
-})
-
-
 app.get('/', (req, res) => {
     res.redirect('/murder-rate/under10');
 })
@@ -177,6 +171,11 @@ app.get('/murder-rate/over100', (req, res) => {
         console.log(error);
         res.status(404).type('txt').send('File not found');
     });
+})
+
+app.get('*', (req, res) => {
+    console.log('Invalid request for: ' + req.url);
+    res.status(404).type('txt').send('No data for request: ' + req.url);
 })
 
 app.listen(port, () => {
