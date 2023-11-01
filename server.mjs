@@ -40,7 +40,7 @@ function dbSelect(query, params) {
 
 app.get('*', (req, res) => {
     console.log('Invalid request for: ' + req.url);
-    res.status(404).type('txt').send('Invalid request for: ' + req.url);
+    res.status(404).type('txt').send('No data for request: ' + req.url);
 })
 
 
