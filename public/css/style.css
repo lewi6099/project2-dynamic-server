@@ -1,0 +1,42 @@
+body, ul{
+    padding: 0;
+    margin: 0;
+}
+
+.navbar {
+    width: 100%;
+    background-color: #232324;
+    list-style-type: none;
+    display: flex;
+    color: white;
+    font-weight: bold;
+    z-index: 100;
+    margin-bottom: 50px;
+}
+
+#logo {
+    margin-right: auto;
+}
+
+.navbar a {
+    padding: 20px; 
+    align-items: center;
+    text-decoration: none;
+    color: white;
+}
+
+.navbar a:hover {
+    background-color: rgb(92, 91, 91);
+}
+
+.data-nav {
+    display: flex;
+    justify-content: center;
+}
+.previous, .next {
+    margin: 10px;
+}
+
+#chartContainer {
+    margin-bottom: 500px;
+}

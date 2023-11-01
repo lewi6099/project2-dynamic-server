@@ -3,23 +3,34 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="/css/style.css">
 	<title>Murders</title>
 	<style></style>
 	<script>
 	window.onload = function () {
 
 		var chart = new CanvasJS.Chart("chartContainer", {
+			height: 370,
 			animationEnabled: true,
 			title:{
 				text: "$TITLE$"
 			},
 			axisX: {
 				title: "Cities",
-				interval: 1
+				interval: 2,
+				labelAutoFit: true,
+				labelFontSize: 12,
+				scaleBreaks: {
+					customBreaks: [{
+						spacing: 10,
+						startValue: 80,
+						endValue: 950
+					}]
+				}
 			},
 			axisY: {
 				title: "Murders",
-				includeZero: true
+				includeZero: true,
 			},
 			legend: {
 				cursor:"pointer",
@@ -74,27 +85,28 @@
 		</script>
 </head>
 <body>
-	<ul>
-		<li><a href="/">Home</a></li>
-		<li><a href="/murder-rate">Murder Data</a></li>
-	</ul>
-	<h1>$TITLE$</h1>
-	<div id="chartContainer" style="height: 370px; width: 100%;"></div>
-	<br>
-	<table>
-		<tr>
-			<th>City</th>
-			<th>State</th>
-			<th>Murders in 2016</th>
-			<th>Murders in 2015</th>
-			<th>Change in Murders</th>
-		</tr>
-		$TABLEDATA$
-	</table>
-	<div>
-		<a href=$PREV$ class="previous ">&#8249; Previous</a>
-		<a href=$NEXT$ class="next ">Next &#8250; </a>
-	</div>
-	<script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+		<ul class='navbar'>
+			<li><a href="/murder-rate/under10">Under 10</a></li>
+			<li><a href="/murder-rate/10-40">10-40</a></li>
+			<li><a href="/murder-rate/40-100">40-100</a></li>
+			<li><a href="/murder-rate/over100">Over 100</a></li>
+		</ul>
+		<div id="chartContainer"></div>
+		<br>
+		<table>
+			<tr>
+				<th>City</th>
+				<th>State</th>
+				<th>Murders in 2016</th>
+				<th>Murders in 2015</th>
+				<th>Change in Murders</th>
+			</tr>
+			$TABLEDATA$
+		</table>
+		<div class='data-nav'>
+			<a href=$PREV$ class="previous ">&#8249; Previous</a>
+			<a href=$NEXT$ class="next ">Next &#8250; </a>
+		</div>
+		<script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
 </body>
 </html>

@@ -38,6 +38,10 @@ function dbSelect(query, params) {
     return p;
 }
 
+app.get('/', (req, res) => {
+    res.redirect('/murder-rate/under10');
+})
+
 app.get('/murder-rate/under10', (req, res) => {
     let p1 = dbSelect("SELECT * FROM murders WHERE murders_2015 < 10");
     let p2 = fs.promises.readFile(path.join(template, 'template.html'), 'utf-8');
