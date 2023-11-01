@@ -38,6 +38,12 @@ function dbSelect(query, params) {
     return p;
 }
 
+app.get('*', (req, res) => {
+    console.log('Invalid request for: ' + req.url);
+    res.status(404).type('txt').send('Invalid request for: ' + req.url);
+})
+
+
 app.get('/', (req, res) => {
     res.redirect('/murder-rate/under10');
 })
@@ -66,7 +72,7 @@ app.get('/murder-rate/under10', (req, res) => {
             datapoints_2016.push(datapoint_2016);
         });
         let style = "<style>" + results[2] + "</style>";
-        let response = results[1].replace("$DATAPOINTS_2016$", JSON.stringify(datapoints_2016)).replace("$DATAPOINTS_2015$", JSON.stringify(datapoints_2015)).replace('$TITLE$', "Cities with under 10 murders").replace('$TABLEDATA$', tableBody).replace('<style></style>', style).replace('$PREV$', 'http://localhost:8000/murder-rate/over100').replace('$NEXT$', 'http://localhost:8000/murder-rate/10-40');
+        let response = results[1].replace("$DATAPOINTS_2016$", JSON.stringify(datapoints_2016)).replace("$DATAPOINTS_2015$", JSON.stringify(datapoints_2015)).replace('$TITLE$', "Cities with under 10 murders").replace('$TABLEDATA$', tableBody).replace('<style></style>', style).replace('$PREV$', '/murder-rate/over100').replace('$NEXT$', '/murder-rate/10-40');
         res.status(200).type('html').send(response);
     }).catch((error) => {
         console.log(error);
@@ -99,7 +105,7 @@ app.get('/murder-rate/10-40', (req, res) => {
             datapoints_2016.push(datapoint_2016);
         });
         let style = "<style>" + results[2] + "</style>";
-        let response = results[1].replace("$DATAPOINTS_2016$", JSON.stringify(datapoints_2016)).replace("$DATAPOINTS_2015$", JSON.stringify(datapoints_2015)).replace('$TITLE$', "Cities with between 10 and 40 murders").replace('$TABLEDATA$', tableBody).replace('<style></style>', style).replace('$PREV$', 'http://localhost:8000/murder-rate/under10').replace('$NEXT$', 'http://localhost:8000/murder-rate/40-100');
+        let response = results[1].replace("$DATAPOINTS_2016$", JSON.stringify(datapoints_2016)).replace("$DATAPOINTS_2015$", JSON.stringify(datapoints_2015)).replace('$TITLE$', "Cities with between 10 and 40 murders").replace('$TABLEDATA$', tableBody).replace('<style></style>', style).replace('$PREV$', '/murder-rate/under10').replace('$NEXT$', '/murder-rate/40-100');
         res.status(200).type('html').send(response);
     }).catch((error) => {
         console.log(error);
@@ -132,7 +138,7 @@ app.get('/murder-rate/40-100', (req, res) => {
         });
 
         let style = "<style>" + results[2] + "</style>";
-        let response = results[1].replace("$DATAPOINTS_2016$", JSON.stringify(datapoints_2016)).replace("$DATAPOINTS_2015$", JSON.stringify(datapoints_2015)).replace('$TITLE$', "Cities with between 40 and 100 murders").replace('$TABLEDATA$', tableBody).replace('<style></style>', style).replace('$PREV$', 'http://localhost:8000/murder-rate/10-40').replace('$NEXT$', 'http://localhost:8000/murder-rate/over100');
+        let response = results[1].replace("$DATAPOINTS_2016$", JSON.stringify(datapoints_2016)).replace("$DATAPOINTS_2015$", JSON.stringify(datapoints_2015)).replace('$TITLE$', "Cities with between 40 and 100 murders").replace('$TABLEDATA$', tableBody).replace('<style></style>', style).replace('$PREV$', '/murder-rate/10-40').replace('$NEXT$', '/murder-rate/over100');
         res.status(200).type('html').send(response);
     }).catch((error) => {
         console.log(error);
@@ -165,7 +171,7 @@ app.get('/murder-rate/over100', (req, res) => {
 
         });
         let style = "<style>" + results[2] + "</style>";
-        let response = results[1].replace("$DATAPOINTS_2016$", JSON.stringify(datapoints_2016)).replace("$DATAPOINTS_2015$", JSON.stringify(datapoints_2015)).replace('$TITLE$', "Cities with over 100 murders").replace('$TABLEDATA$', tableBody).replace('<style></style>', style).replace('$PREV$', 'http://localhost:8000/murder-rate/40-100').replace('$NEXT$', 'http://localhost:8000/murder-rate/under10');
+        let response = results[1].replace("$DATAPOINTS_2016$", JSON.stringify(datapoints_2016)).replace("$DATAPOINTS_2015$", JSON.stringify(datapoints_2015)).replace('$TITLE$', "Cities with over 100 murders").replace('$TABLEDATA$', tableBody).replace('<style></style>', style).replace('$PREV$', '/murder-rate/40-100').replace('$NEXT$', '/murder-rate/under10');
         res.status(200).type('html').send(response);
     }).catch((error) => {
         console.log(error);
